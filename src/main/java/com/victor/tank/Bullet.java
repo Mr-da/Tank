@@ -80,7 +80,9 @@ public class Bullet {
             if(rect1.intersects(rect2)) {
                 tank.die();
                 this.die();
-                tf.explodes.add(new Explode(tank.getX(),tank.getY(),tf));
+                int eX = tank.getX()+Tank.WIDTH-Explode.WIGHT;
+                int eY = tank.getY()+Tank.HEIGHT-Explode.HEIGHT;
+                tf.explodes.add(new Explode(eX,eY,tf));
             }
         }
     }

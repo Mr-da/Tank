@@ -83,7 +83,6 @@ public class TankFrame extends Frame {
         for (int i = 0; i < enemies.size(); i++) {
             Tank t = enemies.get(i);
             t.paint(g);
-            if (random.nextInt(100)>95) t.fire();//坦克对应>>子弹group
         }
 
         //爆炸
@@ -126,6 +125,8 @@ public class TankFrame extends Frame {
             }
             setTankDir();
 
+            new Thread(()->new Audio("audio/tank_move.wav").play()).start();
+
         }
 
 
@@ -159,6 +160,7 @@ public class TankFrame extends Frame {
                 if (down) myTank.setDir(Dir.DOWN);
             }
         }
+
 
     }
 
