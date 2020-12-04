@@ -11,10 +11,11 @@ public class Tank {
 
 
     private GroupEnum group;
-    public   int SPEED = 4;
+    public   int SPEED = 6;
 
-    public static final int WIDTH = ResourceMgr.tankU.getWidth();
-    public static final int HEIGHT=ResourceMgr.tankU.getHeight();
+    public static  int WIDTH = ResourceMgr.goodTankD.getWidth();
+    public static  int HEIGHT=ResourceMgr.goodTankD.getHeight();
+
     Random random = new Random();
 
     public int getX() {
@@ -54,44 +55,23 @@ public class Tank {
     }
 
     public void paint(Graphics g){
-        if(this.group==GroupEnum.GOOD){
-            switch (dir){//每个方向显示不同的图片
-                case LEFT:
-                    g.drawImage(ResourceMgr.tankL, x, y, null);
-                    break;
-                case RIGHT:
-                    g.drawImage(ResourceMgr.tankR, x, y, null);
-                    break;
-                case DOWN:
-                    g.drawImage(ResourceMgr.tankD, x, y, null);
-                    break;
-                case UP:
-                    g.drawImage(ResourceMgr.tankU, x, y, null);
-                    break;
 
-            }
+        switch (dir){//每个方向显示不同的图片
+            case LEFT:
+                g.drawImage(this.group==GroupEnum.GOOD?ResourceMgr.goodTankL:ResourceMgr.badTankL, x, y, null);
+                break;
+            case RIGHT:
+                g.drawImage(this.group==GroupEnum.GOOD?ResourceMgr.goodTankR:ResourceMgr.badTankR, x, y, null);
+                break;
+            case DOWN:
+                g.drawImage(this.group==GroupEnum.GOOD?ResourceMgr.goodTankD:ResourceMgr.badTankD, x, y, null);
+                break;
+            case UP:
+                g.drawImage(this.group==GroupEnum.GOOD?ResourceMgr.goodTankU:ResourceMgr.badTankU, x, y, null);
+                break;
+
         }
-
-        if(this.group==GroupEnum.BAD){
-            switch (dir){//每个方向显示不同的图片
-                case LEFT:
-                    g.drawImage(ResourceMgr.tankL, x, y, null);
-                    break;
-                case RIGHT:
-                    g.drawImage(ResourceMgr.tankR, x, y, null);
-                    break;
-                case DOWN:
-                    g.drawImage(ResourceMgr.tankD, x, y, null);
-                    break;
-                case UP:
-                    g.drawImage(ResourceMgr.tankU, x, y, null);
-                    break;
-
-            }
-        }
-
         move();
-
     }
 
     private void randomDir() {
@@ -113,6 +93,8 @@ public class Tank {
                 case UP:
                     y -= SPEED;
                     break;
+                default:
+                    break;
             }
         }
 
@@ -122,14 +104,14 @@ public class Tank {
             this.moving = true;
             randomDir();
         }
-
+        //边界
         boundCheck();
     }
 
     private void boundCheck() {
         if (x<0) x = 0;
         if (y<30) y = 30;
-        //if (x>TankFrame.FRAME_WIDTH- Tank.WIDTH -2)     x = TankFrame.WIDTH- Tank.WIDTH -2;
+        if (x>TankFrame.FRAME_WIDTH- Tank.WIDTH -2)     x = TankFrame.FRAME_WIDTH- Tank.WIDTH -2;
         if (y>TankFrame.FRAME_HEIGHT-Tank.HEIGHT-2)     y = TankFrame.FRAME_HEIGHT-Tank.HEIGHT-2;
     }
 
