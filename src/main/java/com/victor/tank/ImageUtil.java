@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
-public class ImageUtil {
+public class ImageUtil {//根据不同的角度旋转图片
 	public static BufferedImage rotateImage(final BufferedImage bufferedimage,
             final int degree) {
         int w = bufferedimage.getWidth();

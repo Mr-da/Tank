@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class TankFrame extends Frame {
-    public final static int FRAME_WIDTH = 1080,FRAME_HEIGHT = 960;//主窗口
-
+    public final static int FRAME_WIDTH = PropertyMgr.getInt("frameWidth"),FRAME_HEIGHT = PropertyMgr.getInt("frameHeight");//主窗口
     Tank myTank = new Tank(200,200,Dir.DOWN,this,GroupEnum.GOOD);//主战坦克
     ArrayList<Bullet> bullets = new ArrayList<Bullet>();
     ArrayList<Tank> enemies = new ArrayList<Tank>();
@@ -24,7 +23,7 @@ public class TankFrame extends Frame {
         setTitle("tank war");
         setVisible(true);
         //设置敌军数量
-        for (int i=0;i<6;i++){
+        for (int i=0;i<PropertyMgr.getInt("initTankCount");i++){
             Tank enemy = new Tank(100+i*60,100,Dir.DOWN,this,GroupEnum.BAD);
             enemies.add(enemy);
         }
@@ -69,7 +68,7 @@ public class TankFrame extends Frame {
         //画出主战坦克
         myTank.paint(g);//面向对象@，让坦克自己画自己，定义速度方向
         if (enemies.size()<3){
-            for (int i=0;i<2;i++){
+            for (int i=0;i<PropertyMgr.getInt("rebornEnemy");i++){
                 Tank enemy = new Tank(100+i*100,100,Dir.DOWN,this,GroupEnum.BAD);
                 enemies.add(enemy);
             }

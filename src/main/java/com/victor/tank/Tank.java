@@ -11,7 +11,7 @@ public class Tank {
 
 
     private GroupEnum group;
-    public   int SPEED = 6;
+    public   int SPEED = PropertyMgr.getInt("tankSpeed");
 
     public static  int WIDTH = ResourceMgr.goodTankD.getWidth();
     public static  int HEIGHT=ResourceMgr.goodTankD.getHeight();
