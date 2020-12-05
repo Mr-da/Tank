@@ -15,7 +15,7 @@ public class Tank {
 
     public static  int WIDTH = ResourceMgr.goodTankD.getWidth();
     public static  int HEIGHT=ResourceMgr.goodTankD.getHeight();
-
+    public Rectangle rect2 = new Rectangle(this.x, this.y, Tank.WIDTH, Tank.HEIGHT);
     Random random = new Random();
 
     public int getX() {
@@ -98,14 +98,15 @@ public class Tank {
             }
         }
 
-        if (this.group==GroupEnum.BAD && random.nextInt(100)>95){
-            fire();
+        if (this.group==GroupEnum.BAD ){
+            if(random.nextInt(100)>98) fire();
             this.SPEED = 2;
             this.moving = true;
-            randomDir();
+            if (random.nextInt(100)>95)randomDir();
         }
         //边界
         boundCheck();
+        rect2.x = this.x;rect2.y = this.y;
     }
 
     private void boundCheck() {

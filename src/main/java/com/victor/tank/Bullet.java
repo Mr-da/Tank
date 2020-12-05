@@ -12,6 +12,7 @@ public class Bullet {
     private GroupEnum group;
 
     private boolean living = true;//是否存活
+    private Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
 
 
 
@@ -70,14 +71,13 @@ public class Bullet {
                 break;
         }
         if (x > tf.FRAME_WIDTH || y > tf.FRAME_HEIGHT || x<0 || y<0) this.living = false;//越界死亡
+        rect1.x = this.x;rect1.y = this.y;
     }
 
     //碰撞
     public void collideWith(Tank tank) {
         if (tank.getGroup()!=this.getGroup()){
-            Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
-            Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
-            if(rect1.intersects(rect2)) {
+            if(this.rect1.intersects(tank.rect2)) {
                 tank.die();
                 this.die();
                 int eX = tank.getX()+Tank.WIDTH-Explode.WIGHT;

@@ -68,6 +68,12 @@ public class TankFrame extends Frame {
 
         //画出主战坦克
         myTank.paint(g);//面向对象@，让坦克自己画自己，定义速度方向
+        if (enemies.size()<3){
+            for (int i=0;i<2;i++){
+                Tank enemy = new Tank(100+i*100,100,Dir.DOWN,this,GroupEnum.BAD);
+                enemies.add(enemy);
+            }
+        }
 
         //画出子弹
         for (int i=0;i<bullets.size();i++){
