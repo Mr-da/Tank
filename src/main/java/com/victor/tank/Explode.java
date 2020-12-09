@@ -1,13 +1,14 @@
 package com.victor.tank;
 
+import com.victor.tank.abstractFactory.BaseExplode;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Explode {
-    public static int WIGHT = ResourceMgr.explodes[0].getWidth();
+public class Explode extends BaseExplode {
+    public static int WIDTH = ResourceMgr.explodes[0].getWidth();
     public static int HEIGHT = ResourceMgr.explodes[0].getHeight();
     private int x,y;
-    private boolean living;
     private int step = 0;
     private TankFrame tf;
 

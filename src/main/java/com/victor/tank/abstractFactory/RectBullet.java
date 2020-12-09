@@ -1,18 +1,17 @@
-package com.victor.tank;
+package com.victor.tank.abstractFactory;
 
-import com.victor.tank.abstractFactory.BaseBullet;
-import com.victor.tank.abstractFactory.BaseTank;
+import com.victor.tank.*;
 
 import java.awt.*;
 
-public class Bullet extends BaseBullet {
+public class RectBullet extends BaseBullet {
     public static final int SPEED = PropertyMgr.getInt("bulletSpeed");
-    public static final int WIDTH = ResourceMgr.bulletD.getWidth();
-    public static final int HEIGHT=ResourceMgr.bulletD.getHeight();
-    private int x,y;
-    private Dir dir;//方向
-    private TankFrame tf;
-    private GroupEnum group;
+    public static final int WIDTH = 20;
+    public static final int HEIGHT= 20;
+    public int x,y;
+    public Dir dir;//方向
+    public TankFrame tf;
+    public GroupEnum group;
 
     private boolean living = true;//是否存活
     private Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
@@ -23,11 +22,8 @@ public class Bullet extends BaseBullet {
         return group;
     }
 
-    public void setGroup(GroupEnum g) {
-        this.group = g;
-    }
 
-    public Bullet(int x, int y, Dir dir, TankFrame tf, GroupEnum group){
+    public RectBullet(int x, int y, Dir dir, TankFrame tf, GroupEnum group){
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -39,24 +35,12 @@ public class Bullet extends BaseBullet {
 
     public void paint(Graphics g){
         if(!living) tf.bullets.remove(this);//越界删掉
-//        Color c = g.getColor();
-//        g.setColor(Color.RED);
-//        g.fillOval(x,y,WIDTH,HEIGHT);//画圆
-//        g.setColor(c);
-        switch(dir) {
-            case LEFT:
-                g.drawImage(ResourceMgr.bulletL, x, y, null);
-                break;
-            case UP:
-                g.drawImage(ResourceMgr.bulletU, x, y, null);
-                break;
-            case RIGHT:
-                g.drawImage(ResourceMgr.bulletR, x, y, null);
-                break;
-            case DOWN:
-                g.drawImage(ResourceMgr.bulletD, x, y, null);
-                break;
-        }
+
+        Color c = g.getColor();
+        g.setColor(Color.YELLOW);
+        g.fillOval(x,y,WIDTH,HEIGHT);//画圆
+        g.setColor(c);
+
         move();
     }
 
@@ -85,8 +69,8 @@ public class Bullet extends BaseBullet {
             if(this.rect1.intersects(tank.getRect2())) {
                 tank.die();
                 this.die();
-                int eX = tank.x+Tank.WIDTH-Explode.WIDTH;
-                int eY = tank.y+Tank.HEIGHT-Explode.HEIGHT;
+                int eX = tank.x+RectTank.WIDTH-RectExplode.WIDTH;
+                int eY = tank.y+RectTank.HEIGHT-RectExplode.HEIGHT;
                 tf.explodes.add(tf.gf.createExplode(eX,eY,tf));
             }
         }

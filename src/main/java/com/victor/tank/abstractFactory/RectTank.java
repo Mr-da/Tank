@@ -1,19 +1,19 @@
-package com.victor.tank;
+package com.victor.tank.abstractFactory;
 
-import com.victor.tank.abstractFactory.BaseTank;
+import com.victor.tank.*;
 
 import java.awt.*;
 import java.util.Random;
 
-public class Tank extends BaseTank {
+public class RectTank extends BaseTank {
     Dir dir;
     TankFrame tf;
     public   int SPEED = PropertyMgr.getInt("tankSpeed");
     private boolean moving =  true;
 
-    public static  int WIDTH = ResourceMgr.goodTankD.getWidth();
-    public static  int HEIGHT=ResourceMgr.goodTankD.getHeight();
-    public Rectangle rect2 = new Rectangle(this.x, this.y, Tank.WIDTH, Tank.HEIGHT);
+    public static  int WIDTH = 50;
+    public static  int HEIGHT= 50;
+    public Rectangle rect2 = new Rectangle(this.x, this.y, RectTank.WIDTH, RectTank.HEIGHT);
     Random random = new Random();
     FireStrategy fs;
 
@@ -49,7 +49,7 @@ public class Tank extends BaseTank {
         return rect2;
     }
 
-    public Tank(int x, int y, Dir dir, TankFrame tf, GroupEnum group){
+    public RectTank(int x, int y, Dir dir, TankFrame tf, GroupEnum group){
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -64,21 +64,10 @@ public class Tank extends BaseTank {
 
     public void paint(Graphics g){
 
-        switch (dir){//每个方向显示不同的图片
-            case LEFT:
-                g.drawImage(this.group==GroupEnum.GOOD?ResourceMgr.goodTankL:ResourceMgr.badTankL, x, y, null);
-                break;
-            case RIGHT:
-                g.drawImage(this.group==GroupEnum.GOOD?ResourceMgr.goodTankR:ResourceMgr.badTankR, x, y, null);
-                break;
-            case DOWN:
-                g.drawImage(this.group==GroupEnum.GOOD?ResourceMgr.goodTankD:ResourceMgr.badTankD, x, y, null);
-                break;
-            case UP:
-                g.drawImage(this.group==GroupEnum.GOOD?ResourceMgr.goodTankU:ResourceMgr.badTankU, x, y, null);
-                break;
-
-        }
+        Color c = g.getColor();
+        g.setColor(Color.BLUE);
+        g.fillRect(x,y,WIDTH,HEIGHT);
+        g.setColor(c);
         move();
     }
 
@@ -107,7 +96,7 @@ public class Tank extends BaseTank {
         }
 
         if (this.group==GroupEnum.BAD ){
-            if(random.nextInt(100)>98) fs.fire(this);
+            if(random.nextInt(100)>98) fire(this);
             this.SPEED = 2;
             if (random.nextInt(100)>95)randomDir();
         }
@@ -119,8 +108,8 @@ public class Tank extends BaseTank {
     private void boundCheck() {
         if (x<0) x = 0;
         if (y<30) y = 30;
-        if (x>TankFrame.FRAME_WIDTH- Tank.WIDTH -2)     x = TankFrame.FRAME_WIDTH- Tank.WIDTH -2;
-        if (y>TankFrame.FRAME_HEIGHT-Tank.HEIGHT-2)     y = TankFrame.FRAME_HEIGHT-Tank.HEIGHT-2;
+        if (x>TankFrame.FRAME_WIDTH- RectTank.WIDTH -2)     x = TankFrame.FRAME_WIDTH- RectTank.WIDTH -2;
+        if (y>TankFrame.FRAME_HEIGHT- RectTank.HEIGHT-2)     y = TankFrame.FRAME_HEIGHT- RectTank.HEIGHT-2;
     }
 
 
@@ -131,33 +120,14 @@ public class Tank extends BaseTank {
     public Dir getDir() {
         return dir;
     }
-    public Explode getExplode() {
-        return explode;
-    }
 
-    public void setExplode(Explode explode) {
-        this.explode = explode;
-    }
 
-    private Explode explode;
-
-    public GroupEnum getGroup() {
-        return group;
-    }
-
-    public void setGroup(GroupEnum group) {
-        this.group = group;
-    }
     //发射子弹
-    public void   fire() {
-        //fs.fire(this);
-        int Bx = this.x+Tank.WIDTH/2-Bullet.WIDTH/2;
-        int By = this.y+Tank.HEIGHT/2-Bullet.HEIGHT/2;
-        for (Dir d : Dir.values()) {
-            tf.gf.createBullet(Bx,By,d,tf,group);
-        }
-        if(this.group == GroupEnum.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
-
+    public void fire(RectTank t) {
+        int Bx = t.x+Tank.WIDTH/2-Bullet.WIDTH/2;
+        int By = t.y+Tank.HEIGHT/2-Bullet.HEIGHT/2;
+        tf.gf.createBullet(Bx,By,t.getDir(),t.tf,t.group);
+        if(t.group == GroupEnum.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
     }
 
     public void die() {
