@@ -4,19 +4,18 @@ import java.awt.*;
 import java.util.Random;
 
 public class Tank {
-    private int x,y;
-    private Dir dir;
-    private TankFrame tf;
-
-
-
-    private GroupEnum group;
+    int x,y;
+    Dir dir;
+    TankFrame tf;
+    GroupEnum group;
     public   int SPEED = PropertyMgr.getInt("tankSpeed");
+    private boolean moving =  true;
 
     public static  int WIDTH = ResourceMgr.goodTankD.getWidth();
     public static  int HEIGHT=ResourceMgr.goodTankD.getHeight();
     public Rectangle rect2 = new Rectangle(this.x, this.y, Tank.WIDTH, Tank.HEIGHT);
     Random random = new Random();
+    FireStrategy fs;
 
     public int getX() {
         return x;
@@ -44,7 +43,6 @@ public class Tank {
         this.moving = moving;
     }
 
-    private boolean moving =  false;
 
     public Tank(int x,int y,Dir dir,TankFrame tf,GroupEnum group){
         this.x = x;
@@ -52,6 +50,11 @@ public class Tank {
         this.dir = dir;
         this.tf = tf;
         this.group = group;
+        if (group==GroupEnum.GOOD){
+            fs = new FourDirFireStrategy();
+        }else {
+            fs = new DefaultFireStrategy();
+        }
     }
 
     public void paint(Graphics g){
@@ -99,9 +102,8 @@ public class Tank {
         }
 
         if (this.group==GroupEnum.BAD ){
-            if(random.nextInt(100)>98) fire();
+            if(random.nextInt(100)>98) fs.fire(this);
             this.SPEED = 2;
-            this.moving = true;
             if (random.nextInt(100)>95)randomDir();
         }
         //边界
@@ -143,10 +145,7 @@ public class Tank {
     }
     //发射子弹
     public void fire() {
-        int Bx = this.x+WIDTH/2-Bullet.WIDTH/2;
-        int By = this.y+HEIGHT/2-Bullet.HEIGHT/2;
-        tf.bullets.add(new Bullet(Bx,By,this.getDir(),tf,this.group));
-        if(this.group == GroupEnum.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
+        fs.fire(this);
     }
 
     public void die() {

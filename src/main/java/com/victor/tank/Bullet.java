@@ -30,6 +30,8 @@ public class Bullet {
         this.dir = dir;
         this.tf = tf;
         this.group = group;
+
+        tf.bullets.add(this);
     }
 
     public void paint(Graphics g){
