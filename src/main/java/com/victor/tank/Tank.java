@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class Tank extends GameObject{
     public int x,y;
-    Dir dir;
+    public Dir dir;
     public GameModel gm;
     public GroupEnum group;
     public   int SPEED = PropertyMgr.getInt("tankSpeed");
@@ -153,7 +153,7 @@ public class Tank extends GameObject{
     }
 
     public void die() {
-        gm.enemies.remove(this);
+        gm.objects.remove(this);
     }
 
 

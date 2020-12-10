@@ -21,7 +21,7 @@ public class Explode extends GameObject{
 
     public void paint(Graphics g){
         if (step<ResourceMgr.explodes.length) g.drawImage(ResourceMgr.explodes[step++],x,y,null);
-        else gm.explodes.remove(this);
+        else gm.objects.remove(this);
     }
 
 }

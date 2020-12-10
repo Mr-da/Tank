@@ -12,7 +12,7 @@ public class Bullet extends GameObject{
     private GroupEnum group;
 
     private boolean living = true;//是否存活
-    private Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
+    public Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
 
 
 
@@ -31,11 +31,11 @@ public class Bullet extends GameObject{
         this.gm = gm;
         this.group = group;
 
-        gm.bullets.add(this);
+        gm.objects.add(this);
     }
 
     public void paint(Graphics g){
-        if(!living) gm.bullets.remove(this);//越界删掉
+        if(!living) gm.objects.remove(this);//越界删掉
 //        Color c = g.getColor();
 //        g.setColor(Color.RED);
 //        g.fillOval(x,y,WIDTH,HEIGHT);//画圆
@@ -76,20 +76,9 @@ public class Bullet extends GameObject{
         rect1.x = this.x;rect1.y = this.y;
     }
 
-    //碰撞
-    public void collideWith(Tank tank) {
-        if (tank.getGroup()!=this.getGroup()){
-            if(this.rect1.intersects(tank.rect2)) {
-                tank.die();
-                this.die();
-                int eX = tank.getX()+Tank.WIDTH-Explode.WIGHT;
-                int eY = tank.getY()+Tank.HEIGHT-Explode.HEIGHT;
-                gm.explodes.add(new Explode(eX,eY,gm));
-            }
-        }
-    }
 
-    private void die() {
+
+    public void die() {
         this.living = false;
     }
 }
