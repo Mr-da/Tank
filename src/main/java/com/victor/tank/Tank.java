@@ -5,6 +5,7 @@ import com.victor.tank.strategy.FireStrategy;
 import com.victor.tank.strategy.FourDirFireStrategy;
 
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 public class Tank extends GameObject{
@@ -55,9 +56,22 @@ public class Tank extends GameObject{
         this.gm = gm;
         this.group = group;
         if (group==GroupEnum.GOOD){
-            fs = new FourDirFireStrategy();
+            String goodStrategy = PropertyMgr.getString("fourDirFire");
+            try {
+                fs = (FourDirFireStrategy) Class.forName(goodStrategy).getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //fs = new FourDirFireStrategy();
         }else {
-            fs = new DefaultFireStrategy();
+            String badStrategy= PropertyMgr.getString("defaultFire");
+            try {
+                fs = (DefaultFireStrategy) Class.forName(badStrategy).getDeclaredConstructor().newInstance();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            //fs = new DefaultFireStrategy();
         }
     }
 

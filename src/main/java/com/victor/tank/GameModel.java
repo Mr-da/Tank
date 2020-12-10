@@ -10,7 +10,7 @@ public class GameModel {
     
     Tank myTank = new Tank(200,200,Dir.DOWN,this,GroupEnum.GOOD);//主战坦克
     public ArrayList<GameObject> objects = new ArrayList<>();
-    public Collider chain = new ColliderChain(this);
+    public Collider chain = new ColliderChain();
 
 
 
