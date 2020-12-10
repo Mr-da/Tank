@@ -3,10 +3,6 @@ package com.victor.tank.cor;
 import com.victor.tank.*;
 
 public class TankTankCollide implements Collider{
-    GameModel gm;
-    public TankTankCollide(GameModel gm){
-        this.gm = gm;
-    }
     @Override
     public void collide(GameObject o1, GameObject o2) {
         if (o1 instanceof Tank && o2 instanceof Tank){

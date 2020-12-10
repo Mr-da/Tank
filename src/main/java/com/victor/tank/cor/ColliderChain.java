@@ -1,4 +1,4 @@
- package com.victor.tank.cor;
+package com.victor.tank.cor;
 
 import com.victor.tank.GameModel;
 import com.victor.tank.GameObject;
@@ -11,8 +11,8 @@ public class ColliderChain implements Collider{
     List<Collider> collides = new ArrayList<>();
     public ColliderChain(GameModel gm){
         this.gm = gm;
-        collides.add(new TankBulletCollide(gm));
-        collides.add(new TankTankCollide(gm));
+        collides.add(new TankBulletCollide());
+        collides.add(new TankTankCollide());
         System.out.println("chain:"+this+";===gm:"+gm);
     }
     public void collide(GameObject o1, GameObject o2) {

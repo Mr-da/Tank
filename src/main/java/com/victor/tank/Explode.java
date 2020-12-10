@@ -17,6 +17,8 @@ public class Explode extends GameObject{
         this.y = y;
         this.gm = gm;
         new Thread(()->new Audio("audio/explode.wav").play()).start();
+
+        gm.objects.add(this);
     }
 
     public void paint(Graphics g){

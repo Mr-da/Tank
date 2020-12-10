@@ -3,7 +3,6 @@ package com.victor.tank.cor;
 import com.victor.tank.*;
 
 public class TankBulletCollide implements Collider {
-    GameModel gm;
     @Override
     public void collide(GameObject o1, GameObject o2) {
         if (o1 instanceof Bullet && o2 instanceof Tank){
@@ -15,9 +14,7 @@ public class TankBulletCollide implements Collider {
         }
     }
 
-    public TankBulletCollide(GameModel gm){
-        this.gm = gm;
-    }
+
 
     void collideWith(Bullet b, Tank t){
         if (t.group!=b.getGroup()){
@@ -26,7 +23,7 @@ public class TankBulletCollide implements Collider {
                 b.die();
                 int eX = t.getX()+Tank.WIDTH- Explode.WIGHT;
                 int eY = t.getY()+Tank.HEIGHT-Explode.HEIGHT;
-                gm.objects.add(new Explode(eX,eY,gm));
+                new Explode(eX,eY,t.gm);
             }
         }
     }
