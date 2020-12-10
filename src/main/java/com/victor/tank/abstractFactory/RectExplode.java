@@ -24,9 +24,10 @@ public class RectExplode extends BaseExplode {
     public void paint(Graphics g){
         Color c = g.getColor();
         g.setColor(Color.RED);
-        g.fillOval(x,y,WIDTH,HEIGHT);
+        if (step<15) g.fillOval(x,y,WIDTH,HEIGHT);
         g.setColor(c);
-        tf.explodes.remove(this);
+        step++;
+        if (step>=15)tf.explodes.remove(this);
     }
 
 }
