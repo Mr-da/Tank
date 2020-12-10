@@ -1,13 +1,17 @@
 package com.victor.tank;
 
+import com.victor.tank.strategy.DefaultFireStrategy;
+import com.victor.tank.strategy.FireStrategy;
+import com.victor.tank.strategy.FourDirFireStrategy;
+
 import java.awt.*;
 import java.util.Random;
 
-public class Tank {
-    int x,y;
+public class Tank extends GameObject{
+    public int x,y;
     Dir dir;
-    TankFrame tf;
-    GroupEnum group;
+    public GameModel gm;
+    public GroupEnum group;
     public   int SPEED = PropertyMgr.getInt("tankSpeed");
     private boolean moving =  true;
 
@@ -44,11 +48,11 @@ public class Tank {
     }
 
 
-    public Tank(int x,int y,Dir dir,TankFrame tf,GroupEnum group){
+    public Tank(int x, int y, Dir dir, GameModel gm, GroupEnum group){
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tf = tf;
+        this.gm = gm;
         this.group = group;
         if (group==GroupEnum.GOOD){
             fs = new FourDirFireStrategy();
@@ -149,7 +153,7 @@ public class Tank {
     }
 
     public void die() {
-        tf.enemies.remove(this);
+        gm.enemies.remove(this);
     }
 
 

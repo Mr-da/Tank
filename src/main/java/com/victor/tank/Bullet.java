@@ -2,13 +2,13 @@ package com.victor.tank;
 
 import java.awt.*;
 
-public class Bullet {
+public class Bullet extends GameObject{
     public static final int SPEED = PropertyMgr.getInt("bulletSpeed");
     public static final int WIDTH = ResourceMgr.bulletD.getWidth();
     public static final int HEIGHT=ResourceMgr.bulletD.getHeight();
     private int x,y;
     private Dir dir;//方向
-    private TankFrame tf;
+    private GameModel gm;
     private GroupEnum group;
 
     private boolean living = true;//是否存活
@@ -24,18 +24,18 @@ public class Bullet {
         this.group = g;
     }
 
-    public Bullet(int x, int y, Dir dir, TankFrame tf, GroupEnum group){
+    public Bullet(int x, int y, Dir dir, GameModel gm, GroupEnum group){
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tf = tf;
+        this.gm = gm;
         this.group = group;
 
-        tf.bullets.add(this);
+        gm.bullets.add(this);
     }
 
     public void paint(Graphics g){
-        if(!living) tf.bullets.remove(this);//越界删掉
+        if(!living) gm.bullets.remove(this);//越界删掉
 //        Color c = g.getColor();
 //        g.setColor(Color.RED);
 //        g.fillOval(x,y,WIDTH,HEIGHT);//画圆
@@ -72,7 +72,7 @@ public class Bullet {
                 y -= SPEED;
                 break;
         }
-        if (x > tf.FRAME_WIDTH || y > tf.FRAME_HEIGHT || x<0 || y<0) this.living = false;//越界死亡
+        if (x > TankFrame.FRAME_WIDTH || y > TankFrame.FRAME_HEIGHT || x<0 || y<0) this.living = false;//越界死亡
         rect1.x = this.x;rect1.y = this.y;
     }
 
@@ -84,7 +84,7 @@ public class Bullet {
                 this.die();
                 int eX = tank.getX()+Tank.WIDTH-Explode.WIGHT;
                 int eY = tank.getY()+Tank.HEIGHT-Explode.HEIGHT;
-                tf.explodes.add(new Explode(eX,eY,tf));
+                gm.explodes.add(new Explode(eX,eY,gm));
             }
         }
     }

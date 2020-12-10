@@ -10,10 +10,9 @@ import java.util.Random;
 
 public class TankFrame extends Frame {
     public final static int FRAME_WIDTH = PropertyMgr.getInt("frameWidth"),FRAME_HEIGHT = PropertyMgr.getInt("frameHeight");//主窗口
-    Tank myTank = new Tank(200,200,Dir.DOWN,this,GroupEnum.GOOD);//主战坦克
-    ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-    ArrayList<Tank> enemies = new ArrayList<Tank>();
-    ArrayList<Explode> explodes = new ArrayList<Explode>();
+    GameModel gm = new GameModel();
+
+
 
     private Random random = new Random();
 
@@ -22,14 +21,9 @@ public class TankFrame extends Frame {
         setResizable(false);
         setTitle("tank war");
         setVisible(true);
-        //设置敌军数量
-        for (int i=0;i<PropertyMgr.getInt("initTankCount");i++){
-            Tank enemy = new Tank(100+i*60,100,Dir.DOWN,this,GroupEnum.BAD);
-            enemies.add(enemy);
-        }
-
+        //监听键盘事件
         this.addKeyListener(new MyKeyListener());
-
+        //窗口关闭，程序正常退出
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -55,46 +49,7 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-//        g.fillRect(x,y,50,50);
-//        x += 10;
-        //显示子弹数
-        Color c = g.getColor();
-        g.setColor(Color.WHITE);
-        g.drawString("子弹的数量："+bullets.size(),10,60);
-        g.drawString("敌军的数量："+enemies.size(),10,75);
-        g.drawString("爆炸的数量："+explodes.size(),10,90);
-        g.setColor(c);
-
-        //画出主战坦克
-        myTank.paint(g);//面向对象@，让坦克自己画自己，定义速度方向
-        if (enemies.size()<3){
-            for (int i=0;i<PropertyMgr.getInt("rebornEnemy");i++){
-                Tank enemy = new Tank(100+i*100,100,Dir.DOWN,this,GroupEnum.BAD);
-                enemies.add(enemy);
-            }
-        }
-
-        //画出子弹
-        for (int i=0;i<bullets.size();i++){
-            //子弹碰撞！敌军！销毁
-            //todo
-            for (int j = 0; j <enemies.size(); j++) {
-                bullets.get(i).collideWith(enemies.get(j));//相遇则>敌军and子弹die>
-            }
-            bullets.get(i).paint(g);
-        }
-
-        //画出敌军(已经筛选掉碰撞炸掉的坦克)
-        for (int i = 0; i < enemies.size(); i++) {
-            Tank t = enemies.get(i);
-            t.paint(g);
-        }
-
-        //爆炸
-        for (int i = 0; i < explodes.size(); i++) {
-            explodes.get(i).paint(g);
-        }
-
+        gm.paint(g);
     }
 
 
@@ -123,7 +78,7 @@ public class TankFrame extends Frame {
                     down = true;
                     break;
                 case KeyEvent.VK_CONTROL:
-                    myTank.fire();//按下Ctrl就发射一颗子弹
+                    gm.myTank.fire();//按下Ctrl就发射一颗子弹
                     break;
                 default:
                     break;
@@ -155,9 +110,10 @@ public class TankFrame extends Frame {
         }
 
         private void setTankDir() {
+            Tank myTank = gm.myTank;
             if (!left && !right && !up && !down) myTank.setMoving(false);
             else {
-                myTank.setMoving(true);
+                gm.myTank.setMoving(true);
 
                 if (left) myTank.setDir(Dir.LEFT);
                 if (right) myTank.setDir(Dir.RIGHT);
