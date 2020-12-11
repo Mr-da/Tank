@@ -10,7 +10,6 @@ import java.util.Random;
 
 public class TankFrame extends Frame {
     public final static int FRAME_WIDTH = PropertyMgr.getInt("frameWidth"),FRAME_HEIGHT = PropertyMgr.getInt("frameHeight");//主窗口
-    GameModel gm = new GameModel();
 
     public TankFrame(){
         setSize(FRAME_WIDTH,FRAME_HEIGHT);
@@ -45,7 +44,7 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        gm.paint(g);
+        GameModel.getInstance().paint(g);
     }
 
 
@@ -74,7 +73,7 @@ public class TankFrame extends Frame {
                     down = true;
                     break;
                 case KeyEvent.VK_CONTROL:
-                    gm.myTank.fire();//按下Ctrl就发射一颗子弹
+                    GameModel.getInstance().myTank.fire();//按下Ctrl就发射一颗子弹
                     break;
                 default:
                     break;
@@ -106,10 +105,10 @@ public class TankFrame extends Frame {
         }
 
         private void setTankDir() {
-            Tank myTank = gm.myTank;
+            Tank myTank = GameModel.getInstance().myTank;
             if (!left && !right && !up && !down) myTank.setMoving(false);
             else {
-                gm.myTank.setMoving(true);
+                GameModel.getInstance().myTank.setMoving(true);
 
                 if (left) myTank.setDir(Dir.LEFT);
                 if (right) myTank.setDir(Dir.RIGHT);

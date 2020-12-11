@@ -15,6 +15,7 @@ public class Wall extends GameObject{
         rect.y = y;
         rect.width = width;
         rect.height = height;
+        GameModel.getInstance().objects.add(this);
     }
 
     public void paint(Graphics g){

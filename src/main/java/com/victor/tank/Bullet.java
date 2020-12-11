@@ -6,9 +6,7 @@ public class Bullet extends GameObject{
     public static final int SPEED = PropertyMgr.getInt("bulletSpeed");
     public static final int WIDTH = ResourceMgr.bulletD.getWidth();
     public static final int HEIGHT=ResourceMgr.bulletD.getHeight();
-    public int x,y;
     private Dir dir;//方向
-    private GameModel gm;
     private GroupEnum group;
 
     private boolean living = true;//是否存活
@@ -20,22 +18,17 @@ public class Bullet extends GameObject{
         return group;
     }
 
-    public void setGroup(GroupEnum g) {
-        this.group = g;
-    }
-
-    public Bullet(int x, int y, Dir dir, GameModel gm, GroupEnum group){
+    public Bullet(int x, int y, Dir dir, GroupEnum group){
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.gm = gm;
         this.group = group;
 
-        gm.objects.add(this);
+        GameModel.getInstance().objects.add(this);
     }
 
     public void paint(Graphics g){
-        if(!living) gm.objects.remove(this);//越界删掉
+        if(!living) GameModel.getInstance().objects.remove(this);//越界删掉
 //        Color c = g.getColor();
 //        g.setColor(Color.RED);
 //        g.fillOval(x,y,WIDTH,HEIGHT);//画圆

@@ -5,21 +5,18 @@ import com.victor.tank.strategy.FireStrategy;
 import com.victor.tank.strategy.FourDirFireStrategy;
 
 import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Random;
 
-public class Tank extends GameObject{
-    public int x,y;
-    public int oldX,oldY;
+public class Tank extends GameObject {
+    public int x, y;
+    public int oldX, oldY;
     public Dir dir;
-    public GameModel gm;
     public GroupEnum group;
-    public   int SPEED = PropertyMgr.getInt("tankSpeed");
-    private boolean moving =  true;
+    public int SPEED = PropertyMgr.getInt("tankSpeed");
+    private boolean moving = true;
 
-    public static  int WIDTH = ResourceMgr.goodTankD.getWidth();
-    public static  int HEIGHT=ResourceMgr.goodTankD.getHeight();
+    public static int WIDTH = ResourceMgr.goodTankD.getWidth();
+    public static int HEIGHT = ResourceMgr.goodTankD.getHeight();
     public Rectangle rect2 = new Rectangle();
     Random random = new Random();
     FireStrategy fs;
@@ -28,19 +25,10 @@ public class Tank extends GameObject{
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
 
     public int getY() {
         return y;
     }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-
 
     public boolean isMoving() {
         return moving;
@@ -51,7 +39,7 @@ public class Tank extends GameObject{
     }
 
 
-    public Tank(int x, int y, Dir dir, GameModel gm, GroupEnum group){
+    public Tank(int x, int y, Dir dir, GroupEnum group) {
         this.x = x;
         this.y = y;
         rect2.x = x;
@@ -61,9 +49,8 @@ public class Tank extends GameObject{
         //this.oldX = x;
         //this.oldY = y;
         this.dir = dir;
-        this.gm = gm;
         this.group = group;
-        if (group==GroupEnum.GOOD){
+        if (group == GroupEnum.GOOD) {
             String goodStrategy = PropertyMgr.getString("fourDirFire");
             try {
                 fs = (FourDirFireStrategy) Class.forName(goodStrategy).getDeclaredConstructor().newInstance();
@@ -71,11 +58,11 @@ public class Tank extends GameObject{
                 e.printStackTrace();
             }
             //fs = new FourDirFireStrategy();
-        }else {
-            String badStrategy= PropertyMgr.getString("defaultFire");
+        } else {
+            String badStrategy = PropertyMgr.getString("defaultFire");
             try {
                 fs = (DefaultFireStrategy) Class.forName(badStrategy).getDeclaredConstructor().newInstance();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -83,24 +70,25 @@ public class Tank extends GameObject{
         }
     }
 
-    public void paint(Graphics g){
+    public void paint(Graphics g) {
 
-        switch (dir){//每个方向显示不同的图片
+        switch (dir) {//每个方向显示不同的图片
             case LEFT:
-                g.drawImage(this.group==GroupEnum.GOOD?ResourceMgr.goodTankL:ResourceMgr.badTankL, x, y, null);
+                g.drawImage(this.group == GroupEnum.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(this.group==GroupEnum.GOOD?ResourceMgr.goodTankR:ResourceMgr.badTankR, x, y, null);
+                g.drawImage(this.group == GroupEnum.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
                 break;
             case DOWN:
-                g.drawImage(this.group==GroupEnum.GOOD?ResourceMgr.goodTankD:ResourceMgr.badTankD, x, y, null);
+                g.drawImage(this.group == GroupEnum.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
                 break;
             case UP:
-                g.drawImage(this.group==GroupEnum.GOOD?ResourceMgr.goodTankU:ResourceMgr.badTankU, x, y, null);
+                g.drawImage(this.group == GroupEnum.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
                 break;
 
         }
-        oldX = x;oldY=y;//下次移动之前记录位置
+        oldX = x;
+        oldY = y;//下次移动之前记录位置
         move();
     }
 
@@ -109,8 +97,8 @@ public class Tank extends GameObject{
     }
 
     private void move() {
-        if (moving){
-            switch (dir){
+        if (moving) {
+            switch (dir) {
                 case LEFT:
                     x -= SPEED;
                     break;
@@ -128,21 +116,22 @@ public class Tank extends GameObject{
             }
         }
 
-        if (this.group==GroupEnum.BAD ){
-            if(random.nextInt(100)>98) fs.fire(this);
+        if (this.group == GroupEnum.BAD) {
+            if (random.nextInt(100) > 98) fs.fire(this);
             this.SPEED = 2;
-            if (random.nextInt(100)>95)randomDir();
+            if (random.nextInt(100) > 95) randomDir();
         }
         //边界
         boundCheck();
-        rect2.x = this.x;rect2.y = this.y;
+        rect2.x = this.x;
+        rect2.y = this.y;
     }
 
     private void boundCheck() {
-        if (x<0) x = 0;
-        if (y<30) y = 30;
-        if (x>TankFrame.FRAME_WIDTH- Tank.WIDTH -2)     x = TankFrame.FRAME_WIDTH- Tank.WIDTH -2;
-        if (y>TankFrame.FRAME_HEIGHT-Tank.HEIGHT-2)     y = TankFrame.FRAME_HEIGHT-Tank.HEIGHT-2;
+        if (x < 0) x = 0;
+        if (y < 30) y = 30;
+        if (x > TankFrame.FRAME_WIDTH - Tank.WIDTH - 2) x = TankFrame.FRAME_WIDTH - Tank.WIDTH - 2;
+        if (y > TankFrame.FRAME_HEIGHT - Tank.HEIGHT - 2) y = TankFrame.FRAME_HEIGHT - Tank.HEIGHT - 2;
     }
 
 
@@ -153,6 +142,7 @@ public class Tank extends GameObject{
     public Dir getDir() {
         return dir;
     }
+
     public Explode getExplode() {
         return explode;
     }
@@ -170,16 +160,17 @@ public class Tank extends GameObject{
     public void setGroup(GroupEnum group) {
         this.group = group;
     }
+
     //发射子弹
     public void fire() {
         fs.fire(this);
     }
 
     public void die() {
-        gm.objects.remove(this);
+        GameModel.getInstance().objects.remove(this);
     }
 
-    public void back(){
+    public void back() {
         x = oldX;
         y = oldY;
     }

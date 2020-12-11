@@ -23,7 +23,7 @@ public class TankBulletCollide implements Collider {
                 b.die();
                 int eX = t.getX()+Tank.WIDTH- Explode.WIGHT;
                 int eY = t.getY()+Tank.HEIGHT-Explode.HEIGHT;
-                new Explode(eX,eY,t.gm);
+                new Explode(eX,eY);
                 return true;
             }
         }
