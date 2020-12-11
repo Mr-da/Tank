@@ -12,10 +12,6 @@ public class TankFrame extends Frame {
     public final static int FRAME_WIDTH = PropertyMgr.getInt("frameWidth"),FRAME_HEIGHT = PropertyMgr.getInt("frameHeight");//主窗口
     GameModel gm = new GameModel();
 
-
-
-    private Random random = new Random();
-
     public TankFrame(){
         setSize(FRAME_WIDTH,FRAME_HEIGHT);
         setResizable(false);
@@ -34,7 +30,7 @@ public class TankFrame extends Frame {
 
     Image offScreenImage = null;
     @Override
-    public void update(Graphics g) {
+    public void update(Graphics g) {//解决子弹闪烁问题
         if(offScreenImage == null) {
             offScreenImage = this.createImage(FRAME_WIDTH, FRAME_HEIGHT);
         }

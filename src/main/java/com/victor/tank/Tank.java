@@ -6,10 +6,12 @@ import com.victor.tank.strategy.FourDirFireStrategy;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Tank extends GameObject{
     public int x,y;
+    public int oldX,oldY;
     public Dir dir;
     public GameModel gm;
     public GroupEnum group;
@@ -18,7 +20,7 @@ public class Tank extends GameObject{
 
     public static  int WIDTH = ResourceMgr.goodTankD.getWidth();
     public static  int HEIGHT=ResourceMgr.goodTankD.getHeight();
-    public Rectangle rect2 = new Rectangle(this.x, this.y, Tank.WIDTH, Tank.HEIGHT);
+    public Rectangle rect2 = new Rectangle();
     Random random = new Random();
     FireStrategy fs;
 
@@ -52,6 +54,12 @@ public class Tank extends GameObject{
     public Tank(int x, int y, Dir dir, GameModel gm, GroupEnum group){
         this.x = x;
         this.y = y;
+        rect2.x = x;
+        rect2.y = y;
+        rect2.width = WIDTH;
+        rect2.height = HEIGHT;
+        //this.oldX = x;
+        //this.oldY = y;
         this.dir = dir;
         this.gm = gm;
         this.group = group;
@@ -92,6 +100,7 @@ public class Tank extends GameObject{
                 break;
 
         }
+        oldX = x;oldY=y;//下次移动之前记录位置
         move();
     }
 
@@ -168,6 +177,11 @@ public class Tank extends GameObject{
 
     public void die() {
         gm.objects.remove(this);
+    }
+
+    public void back(){
+        x = oldX;
+        y = oldY;
     }
 
 

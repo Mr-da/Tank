@@ -17,7 +17,7 @@ public class GameModel {
     void initEnemies(){
         //设置敌军数量
         for (int i=0;i<PropertyMgr.getInt("initTankCount");i++){
-            Tank enemy = new Tank(100+i*60,100,Dir.DOWN,this,GroupEnum.BAD);
+            Tank enemy = new Tank(30+i*100,100,Dir.DOWN,this,GroupEnum.BAD);
             objects.add(enemy);
         }
     }
@@ -47,7 +47,7 @@ public class GameModel {
 //        }
         for (int i = 0; i < objects.size(); i++) {
             for (int j = i+1; j < objects.size() ; j++) {
-                chain.collide(objects.get(i),objects.get(j));
+                if (chain.collide(objects.get(i),objects.get(j))) break;
             }
         }
 

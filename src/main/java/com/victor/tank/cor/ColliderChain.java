@@ -1,10 +1,8 @@
 package com.victor.tank.cor;
 
-import com.victor.tank.GameModel;
 import com.victor.tank.GameObject;
 import com.victor.tank.PropertyMgr;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,14 +20,15 @@ public class ColliderChain implements Collider{
             }
         }
     }
-    public void collide(GameObject o1, GameObject o2) {
-        collideWith(o1,o2);
+    public boolean collide(GameObject o1, GameObject o2) {
+        return collideWith(o1,o2);
     }
 
-    private void collideWith(GameObject o1, GameObject o2) {
+    private boolean collideWith(GameObject o1, GameObject o2) {
         for (int i = 0; i < collides.size(); i++) {
-            collides.get(i).collide(o1,o2);
+            if (collides.get(i).collide(o1,o2)) return true;//相撞结束此次当前循环
         }
+        return false;
     }
 
 
