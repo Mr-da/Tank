@@ -18,24 +18,4 @@ public class TankTankCollide implements Collider{
             }
     }
 
-    private void turnBack(Tank t) {
-        switch (t.dir){
-            case UP:
-                t.dir = Dir.DOWN;
-                break;
-            case DOWN:
-                t.dir = Dir.UP;
-                break;
-            case LEFT:
-                t.dir = Dir.RIGHT;
-                break;
-            case RIGHT:
-                t.dir = Dir.LEFT;
-                break;
-            default:
-                break;
-
-        }
-    }
-
 }

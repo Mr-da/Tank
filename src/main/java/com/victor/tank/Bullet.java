@@ -6,7 +6,7 @@ public class Bullet extends GameObject{
     public static final int SPEED = PropertyMgr.getInt("bulletSpeed");
     public static final int WIDTH = ResourceMgr.bulletD.getWidth();
     public static final int HEIGHT=ResourceMgr.bulletD.getHeight();
-    private int x,y;
+    public int x,y;
     private Dir dir;//方向
     private GameModel gm;
     private GroupEnum group;

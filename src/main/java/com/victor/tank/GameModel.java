@@ -17,7 +17,7 @@ public class GameModel {
     void initEnemies(){
         //设置敌军数量
         for (int i=0;i<PropertyMgr.getInt("initTankCount");i++){
-            Tank enemy = new Tank(30+i*100,100,Dir.DOWN,this,GroupEnum.BAD);
+            Tank enemy = new Tank(30+i*100,50,Dir.DOWN,this,GroupEnum.BAD);
             objects.add(enemy);
         }
     }
@@ -55,7 +55,11 @@ public class GameModel {
         for (int i = 0; i < objects.size(); i++) {
             objects.get(i).paint(g);
         }
-
+        // 初始化墙
+        objects.add(new Wall(150, 150, 200, 40));
+        //objects.add(new Wall(550, 150, 200, 40));
+        objects.add(new Wall(300, 300, 40, 200));
+        objects.add(new Wall(550, 300, 40, 200));
 //        //爆炸
 //        for (int i = 0; i < explodes.size(); i++) {
 //            explodes.get(i).paint(g);
