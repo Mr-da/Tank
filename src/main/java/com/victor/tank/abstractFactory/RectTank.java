@@ -1,6 +1,9 @@
 package com.victor.tank.abstractFactory;
 
 import com.victor.tank.*;
+import com.victor.tank.strategy.DefaultFireStrategy;
+import com.victor.tank.strategy.FireStrategy;
+import com.victor.tank.strategy.FourDirFireStrategy;
 
 import java.awt.*;
 import java.util.Random;

@@ -1,13 +1,16 @@
 package com.victor.tank;
 
 import com.victor.tank.abstractFactory.BaseTank;
+import com.victor.tank.strategy.DefaultFireStrategy;
+import com.victor.tank.strategy.FireStrategy;
+import com.victor.tank.strategy.FourDirFireStrategy;
 
 import java.awt.*;
 import java.util.Random;
 
 public class Tank extends BaseTank {
     Dir dir;
-    TankFrame tf;
+    public TankFrame tf;
     public   int SPEED = PropertyMgr.getInt("tankSpeed");
     private boolean moving =  true;
 
@@ -150,13 +153,13 @@ public class Tank extends BaseTank {
     }
     //发射子弹
     public void   fire() {
-        //fs.fire(this);
-        int Bx = this.x+Tank.WIDTH/2-Bullet.WIDTH/2;
-        int By = this.y+Tank.HEIGHT/2-Bullet.HEIGHT/2;
-        for (Dir d : Dir.values()) {
-            tf.gf.createBullet(Bx,By,d,tf,group);
-        }
-        if(this.group == GroupEnum.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
+        fs.fire(this);
+//        int Bx = this.x+Tank.WIDTH/2-Bullet.WIDTH/2;
+//        int By = this.y+Tank.HEIGHT/2-Bullet.HEIGHT/2;
+//        for (Dir d : Dir.values()) {
+//            tf.gf.createBullet(Bx,By,d,tf,group);
+//        }
+        //if(this.group == GroupEnum.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
 
     }
 

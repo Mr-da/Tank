@@ -17,7 +17,7 @@ public class TankFrame extends Frame {
     public ArrayList<BaseTank> enemies = new ArrayList<>();
     public ArrayList<BaseExplode> explodes = new ArrayList<>();
 
-    public GameFactory gf = new RectFactory();
+    public GameFactory gf = new DefaultFactory();
     public TankFrame(){
         setSize(FRAME_WIDTH,FRAME_HEIGHT);
         setResizable(false);
