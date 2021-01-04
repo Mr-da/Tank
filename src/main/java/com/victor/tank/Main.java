@@ -6,7 +6,7 @@ public class Main {
         //new Thread(()->new Audio("audio/war1.wav").loop()).start();
         //2.自动刷新画笔
         while (true){
-            Thread.sleep(25);
+            Thread.sleep(50);
             tf.repaint();
         }
     }

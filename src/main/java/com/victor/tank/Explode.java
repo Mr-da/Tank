@@ -1,10 +1,9 @@
 package com.victor.tank;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class Explode extends GameObject{
-    public static int WIGHT = ResourceMgr.explodes[0].getWidth();
+    public static int WIDTH = ResourceMgr.explodes[0].getWidth();
     public static int HEIGHT = ResourceMgr.explodes[0].getHeight();
     private int x,y;
     private boolean living;
@@ -15,13 +14,19 @@ public class Explode extends GameObject{
         this.x = x;
         this.y = y;
         new Thread(()->new Audio("audio/explode.wav").play()).start();
-
-        GameModel.getInstance().objects.add(this);
+        GameModel.getInstance().add(this);
     }
 
     public void paint(Graphics g){
         if (step<ResourceMgr.explodes.length) g.drawImage(ResourceMgr.explodes[step++],x,y,null);
-        else GameModel.getInstance().objects.remove(this);
+        else GameModel.getInstance().remove(this);
+    }
+
+    public int getHeight() {
+        return HEIGHT;
+    }
+    public int getWidth(){
+        return WIDTH;
     }
 
 }

@@ -1,5 +1,8 @@
 package com.victor.tank;
 
+import com.victor.tank.decorator.GODecorator;
+import com.victor.tank.decorator.RectDecorator;
+
 import java.awt.*;
 
 public class Bullet extends GameObject{
@@ -23,16 +26,13 @@ public class Bullet extends GameObject{
         this.y = y;
         this.dir = dir;
         this.group = group;
-
-        GameModel.getInstance().objects.add(this);
+        GameModel.getInstance().add(this);
     }
 
+
+
     public void paint(Graphics g){
-        if(!living) GameModel.getInstance().objects.remove(this);//越界删掉
-//        Color c = g.getColor();
-//        g.setColor(Color.RED);
-//        g.fillOval(x,y,WIDTH,HEIGHT);//画圆
-//        g.setColor(c);
+        if(!living) GameModel.getInstance().remove(this);//越界删掉
         switch(dir) {
             case LEFT:
                 g.drawImage(ResourceMgr.bulletL, x, y, null);
@@ -73,5 +73,14 @@ public class Bullet extends GameObject{
 
     public void die() {
         this.living = false;
+    }
+
+    @Override
+    public int getHeight() {
+        return Bullet.HEIGHT;
+    }
+    @Override
+    public int getWidth(){
+        return Bullet.WIDTH;
     }
 }

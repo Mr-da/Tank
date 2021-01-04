@@ -21,7 +21,7 @@ public class TankBulletCollide implements Collider {
             if(b.rect1.intersects(t.rect2)) {
                 t.die();
                 b.die();
-                int eX = t.getX()+Tank.WIDTH- Explode.WIGHT;
+                int eX = t.getX()+Tank.WIDTH- Explode.WIDTH;
                 int eY = t.getY()+Tank.HEIGHT-Explode.HEIGHT;
                 new Explode(eX,eY);
                 return true;

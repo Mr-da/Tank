@@ -16,9 +16,10 @@ public class WallBulletCollide implements Collider{
     boolean collideWith(Bullet b, Wall w){
             if(b.rect1.intersects(w.rect)) {
                 b.die();
-               //explode
-                int eX = b.x - Explode.WIGHT/2+Bullet.WIDTH/2;
-                int eY = b.y - Explode.HEIGHT;
+                //explode
+                //int eX = b.x - Explode.WIGHT/2+Bullet.WIDTH/2;
+                //int eY = b.y - Explode.HEIGHT;
+                //new Explode(eX,eY);
                return true;
             }
             return false;

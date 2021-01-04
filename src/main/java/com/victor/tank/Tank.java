@@ -1,10 +1,15 @@
 package com.victor.tank;
 
+import com.victor.tank.observer.FireEventListener;
+import com.victor.tank.observer.TankFireEvent;
+import com.victor.tank.observer.TankFireObserver;
 import com.victor.tank.strategy.DefaultFireStrategy;
 import com.victor.tank.strategy.FireStrategy;
 import com.victor.tank.strategy.FourDirFireStrategy;
 
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class Tank extends GameObject {
@@ -166,8 +171,16 @@ public class Tank extends GameObject {
         fs.fire(this);
     }
 
+    private List<FireEventListener> listeners = Arrays.asList(new TankFireObserver());
+    public void fireEventHappen(){
+        TankFireEvent event = new TankFireEvent(this);
+        for (FireEventListener listener : listeners) {
+            listener.handleEvent(event);
+        }
+    }
+
     public void die() {
-        GameModel.getInstance().objects.remove(this);
+        GameModel.getInstance().remove(this);
     }
 
     public void back() {
@@ -175,5 +188,11 @@ public class Tank extends GameObject {
         y = oldY;
     }
 
+    public int getHeight() {
+        return HEIGHT;
+    }
+    public int getWidth(){
+        return WIDTH;
+    }
 
 }

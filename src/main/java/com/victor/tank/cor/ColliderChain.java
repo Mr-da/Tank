@@ -4,6 +4,7 @@ import com.victor.tank.GameObject;
 import com.victor.tank.PropertyMgr;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ColliderChain implements Collider{
